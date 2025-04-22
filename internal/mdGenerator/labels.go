@@ -4,6 +4,14 @@ func getLabels(lang string) labels {
 	switch lang {
 	case "en":
 		return enLabels
+	case "es":
+		return esLabels
+	case "fr":
+		return frLabels
+	case "de":
+		return deLabels
+	case "ua":
+		return uaLabels
 	case "ru":
 		return ruLabels
 	default:
@@ -51,6 +59,86 @@ var enLabels = labels{
 	file:     "File",
 }
 
+var esLabels = labels{
+	title:        "TODO en el proyecto",
+	lastUpdate:   "Última actualización",
+	overview:     "Resumen",
+	total:        "Total",
+	opened:       "Abierto",
+	done:         "Hecho",
+	withDeadline: "Con fecha límite",
+	withReminder: "Con recordatorio",
+	withAssignee: "Con asignado",
+
+	general: "General",
+	scope:   "Ámbito",
+
+	deadline: "Fecha límite",
+	reminder: "Recordatorio",
+	assignee: "Responsable",
+	file:     "Archivo",
+}
+
+var frLabels = labels{
+	title:        "TODO dans le projet",
+	lastUpdate:   "Dernière mise à jour",
+	overview:     "Aperçu",
+	total:        "Total",
+	opened:       "Ouvert",
+	done:         "Terminé",
+	withDeadline: "Avec échéance",
+	withReminder: "Avec rappel",
+	withAssignee: "Avec responsable",
+
+	general: "Général",
+	scope:   "Portée",
+
+	deadline: "Date limite",
+	reminder: "Rappel",
+	assignee: "Responsable",
+	file:     "Fichier",
+}
+
+var deLabels = labels{
+	title:        "TODO im Projekt",
+	lastUpdate:   "Letzte Aktualisierung",
+	overview:     "Übersicht",
+	total:        "Gesamt",
+	opened:       "Offen",
+	done:         "Erledigt",
+	withDeadline: "Mit Frist",
+	withReminder: "Mit Erinnerung",
+	withAssignee: "Mit Verantwortlichem",
+
+	general: "Allgemein",
+	scope:   "Bereich",
+
+	deadline: "Frist",
+	reminder: "Erinnerung",
+	assignee: "Verantwortlicher",
+	file:     "Datei",
+}
+
+var uaLabels = labels{
+	title:        "TODO в проєкті",
+	lastUpdate:   "Останнє оновлення",
+	overview:     "Огляд",
+	total:        "Всього",
+	opened:       "Відкрите",
+	done:         "Завершено",
+	withDeadline: "З терміном виконання",
+	withReminder: "З нагадуванням",
+	withAssignee: "З виконавцем",
+
+	general: "Загальне",
+	scope:   "Область",
+
+	deadline: "Термін виконання",
+	reminder: "Нагадування",
+	assignee: "Виконавець",
+	file:     "Файл",
+}
+
 var ruLabels = labels{
 	title:        "TODO в проекте",
 	lastUpdate:   "Последнее обновление",
@@ -63,12 +151,10 @@ var ruLabels = labels{
 	withAssignee: "С исполнителем",
 
 	general: "Общие",
-	scope:   "Скоуп",
+	scope:   "Область",
 
 	deadline: "Дедлайн",
 	reminder: "Напоминание",
 	assignee: "Ответственный",
 	file:     "Файл",
 }
-
-// todo: add more locales

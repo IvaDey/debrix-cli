@@ -19,6 +19,10 @@ Debrix supports custom configuration via a YAML file. By default, it looks for a
 
 **Supported locales**
 - English (en)
+- Spanish (es)
+- French (fr)
+- German (de)
+- Ukrainian (ua)
 - Russian (ru)
 
 **Supported layout values**
