@@ -3,10 +3,11 @@ package mdGenerator
 import (
 	"fmt"
 	"github.com/ivadey/debrix-cli/internal/todos"
+	"github.com/ivadey/debrix-cli/internal/utils"
 	"strings"
 )
 
-func generateTable(lang string, todosInfo []todos.TodoInfo) string {
+func generateTable(lang string, todosInfo []todos.TodoInfo, config *utils.Config) string {
 	localizedLabels := getLabels(lang)
 
 	res := fmt.Sprintf(
@@ -38,11 +39,10 @@ func generateTable(lang string, todosInfo []todos.TodoInfo) string {
 		}
 
 		file := fmt.Sprintf(
-			"[%s:%d](%s#L%d)",
+			"[%s:%d](%s)",
 			todoInfo.FileName,
 			todoInfo.Line,
-			todoInfo.RelativePath,
-			todoInfo.Line,
+			utils.GenerateLink(todoInfo, config),
 		)
 
 		res += fmt.Sprintf(

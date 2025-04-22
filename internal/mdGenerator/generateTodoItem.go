@@ -3,18 +3,18 @@ package mdGenerator
 import (
 	"fmt"
 	"github.com/ivadey/debrix-cli/internal/todos"
+	"github.com/ivadey/debrix-cli/internal/utils"
 	"strings"
 )
 
-func generateTodoItem(lang string, todoInfo todos.TodoInfo) string {
+func generateTodoItem(lang string, todoInfo todos.TodoInfo, config *utils.Config) string {
 	localizedLabels := getLabels(lang)
 
 	res := fmt.Sprintf(
-		"- [ ] [%s:%d](%s#L%d) %s",
+		"- [ ] [%s:%d](%s) %s",
 		todoInfo.FileName,
 		todoInfo.Line,
-		todoInfo.RelativePath,
-		todoInfo.Line,
+		utils.GenerateLink(todoInfo, config),
 		todoInfo.Task,
 	)
 	annotations := make([]string, 0)

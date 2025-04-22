@@ -31,6 +31,7 @@ func GetConfig(atPath string) *Config {
 			"coverage",     // Code coverage reports
 			"cache",
 		},
+		LinkTemplate: "{{filePath}}:{{lineNumber}}",
 	}
 
 	// todo: Also exclude the same content as defined in project .gitignore
@@ -44,9 +45,10 @@ func GetConfig(atPath string) *Config {
 }
 
 type Config struct {
-	Pattern  []string `yaml:"pattern"`
-	OutFile  string   `yaml:"outFile"`
-	Language string   `yaml:"language"`
-	Layout   string   `yaml:"layout"`
-	Exclude  []string `yaml:"exclude"`
+	Pattern      []string `yaml:"pattern"`
+	OutFile      string   `yaml:"outFile"`
+	Language     string   `yaml:"language"`
+	Layout       string   `yaml:"layout"`
+	Exclude      []string `yaml:"exclude"`
+	LinkTemplate string   `yaml:"linkTemplate"`
 }

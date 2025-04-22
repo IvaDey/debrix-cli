@@ -37,7 +37,7 @@ func main() {
 	}
 	fmt.Println("")
 
-	var res string = mdGenerator.Generate(config.Language, todosInfo, config.Layout)
+	var res string = mdGenerator.Generate(todosInfo, config)
 
 	err = os.WriteFile(filepath.Join(workDir, config.OutFile), []byte(res), 0644)
 	if err != nil {

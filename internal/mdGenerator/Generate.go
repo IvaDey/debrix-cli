@@ -3,10 +3,14 @@ package mdGenerator
 import (
 	"fmt"
 	"github.com/ivadey/debrix-cli/internal/todos"
+	"github.com/ivadey/debrix-cli/internal/utils"
 	"strings"
 )
 
-func Generate(lang string, todosInfo []todos.TodoInfo, layout string) string {
+func Generate(todosInfo []todos.TodoInfo, config *utils.Config) string {
+	lang := config.Language
+	layout := config.Layout
+
 	localizedLabels := getLabels(lang)
 
 	var res string
@@ -49,28 +53,28 @@ func Generate(lang string, todosInfo []todos.TodoInfo, layout string) string {
 		res += fmt.Sprintf(
 			"## 🗂 %s\n\n%s\n\n",
 			localizedLabels.general,
-			generateTodosLayout(lang, unscopedTodos, layout),
+			generateTodosLayout(lang, unscopedTodos, layout, config),
 		)
 	}
 	for scope, todoItems := range scopedTodos {
 		res += fmt.Sprintf(
 			"## 🧩 %s: "+scope+"\n\n%s\n\n",
 			localizedLabels.scope,
-			generateTodosLayout(lang, todoItems, layout),
+			generateTodosLayout(lang, todoItems, layout, config),
 		)
 	}
 
 	return header + "\n\n" + res
 }
 
-func generateTodosLayout(lang string, todosInfo []todos.TodoInfo, layout string) string {
+func generateTodosLayout(lang string, todosInfo []todos.TodoInfo, layout string, config *utils.Config) string {
 	switch layout {
 	case "table":
-		return generateTable(lang, todosInfo)
+		return generateTable(lang, todosInfo, config)
 	default:
 		items := make([]string, 0)
 		for _, todoInfo := range todosInfo {
-			items = append(items, generateTodoItem(lang, todoInfo))
+			items = append(items, generateTodoItem(lang, todoInfo, config))
 		}
 		return strings.Join(items, "\n")
 	}
