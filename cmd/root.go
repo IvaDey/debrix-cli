@@ -20,7 +20,7 @@ func Execute() {
 
 	utils.ReadConfig(workDir)
 
-	if err := rootCmd.Execute(); err != nil {
+	if err = rootCmd.Execute(); err != nil {
 		_, err = fmt.Fprintln(os.Stderr, err)
 		if err != nil {
 			fmt.Println("Error:", err)
