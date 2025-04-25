@@ -25,7 +25,7 @@ var generateCmd = &cobra.Command{
 			panic(err)
 		}
 
-		config := utils.GetConfig(workDir)
+		config := utils.GetConfig()
 		filesToParse := utils.GetFilesToInspect(workDir, config.Exclude)
 
 		total := len(filesToParse)

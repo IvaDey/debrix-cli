@@ -8,8 +8,10 @@ import (
 
 const configFileName = ".debrix.yml"
 
-func GetConfig(atPath string) *Config {
-	config := Config{
+var config *Config
+
+func ReadConfig(atPath string) *Config {
+	config = &Config{
 		Pattern:  []string{"todo"},
 		OutFile:  "TODO.md",
 		Language: "en",
@@ -38,10 +40,17 @@ func GetConfig(atPath string) *Config {
 
 	fromFile, err := os.ReadFile(filepath.Join(atPath, configFileName))
 	if err == nil {
-		err = yaml.Unmarshal(fromFile, &config)
+		err = yaml.Unmarshal(fromFile, config)
 	}
 
-	return &config
+	return config
+}
+
+func GetConfig() *Config {
+	if config == nil {
+		panic("Config was not initialized")
+	}
+	return config
 }
 
 type Config struct {
