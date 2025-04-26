@@ -3,6 +3,7 @@ package todoItils
 import (
 	"github.com/ivadey/debrix-cli/internal/dbUtils"
 	"github.com/ivadey/debrix-cli/internal/parser"
+	"github.com/ivadey/debrix-cli/internal/utils"
 	"path/filepath"
 	"regexp"
 	"strings"
@@ -27,6 +28,9 @@ func Collect(basePath string, path string, pattern *regexp.Regexp) []dbUtils.Tod
 				todoItem.RelativePath, _ = filepath.Rel(basePath, path)
 				todoItem.FileName = filepath.Base(path)
 				todoItem.Line = comment.Line + uint32(index)
+
+				author, _ := utils.GetAuthorForLine(path, todoItem.Line)
+				todoItem.Author = author
 
 				matchedIndex := findIndex(todoItem.Task, &storedItems)
 				if matchedIndex == -1 {

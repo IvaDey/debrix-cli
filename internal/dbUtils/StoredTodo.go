@@ -20,8 +20,5 @@ type TodoItem struct {
 	Reminder     string
 
 	IsCompleted bool
-	// Author
-	// Commit hash (when was added)
-	// Added at
-	// Complete: by who, when and commit hash
+	Author      string
 }
