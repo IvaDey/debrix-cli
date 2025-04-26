@@ -2,8 +2,9 @@ package cmd
 
 import (
 	"fmt"
+	"github.com/ivadey/debrix-cli/internal/dbUtils"
 	"github.com/ivadey/debrix-cli/internal/mdGenerator"
-	"github.com/ivadey/debrix-cli/internal/todos"
+	"github.com/ivadey/debrix-cli/internal/todoItils"
 	"github.com/ivadey/debrix-cli/internal/utils"
 	"github.com/spf13/cobra"
 	"os"
@@ -32,20 +33,21 @@ var generateCmd = &cobra.Command{
 		collected := 0
 		fmt.Printf("Total amount of files to inspect: %v\n", len(filesToParse))
 
-		todosInfo := make([]todos.TodoInfo, 0)
-
 		var todoPattern = regexp.MustCompile("(?i)(" + strings.Join(config.Pattern, "|") + ")")
 		for _, filePath := range filesToParse {
 			collected++
 			utils.RenderProgressBar(collected, total, 80)
 
-			collectedTodos := todos.Collect(workDir, filePath, todoPattern)
-
-			todosInfo = append(todosInfo, collectedTodos...)
+			todoItils.Collect(workDir, filePath, todoPattern)
 		}
 		fmt.Println("")
 
-		var res string = mdGenerator.Generate(todosInfo, config)
+		storedData := *dbUtils.FetchAll()
+		todoItems := make([]dbUtils.TodoItem, len(storedData))
+		for index, item := range storedData {
+			todoItems[index] = item.TodoItem
+		}
+		res := mdGenerator.Generate(todoItems, config)
 
 		err = os.WriteFile(filepath.Join(workDir, config.OutFile), []byte(res), 0644)
 		if err != nil {

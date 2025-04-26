@@ -17,7 +17,7 @@ import (
 )
 
 func cleanComment(node *sitter.Node, source []byte) string {
-	comment := node.Content([]byte(source))
+	comment := node.Content(source)
 
 	if strings.HasPrefix(comment, "//") {
 		comment = comment[2:]

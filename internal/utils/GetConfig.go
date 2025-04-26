@@ -34,6 +34,7 @@ func ReadConfig(atPath string) *Config {
 			"cache",
 		},
 		LinkTemplate: "{{filePath}}:{{lineNumber}}",
+		DbPath:       ".debrix.db",
 	}
 
 	// todo: Also exclude the same content as defined in project .gitignore
@@ -60,4 +61,5 @@ type Config struct {
 	Layout       string   `yaml:"layout"`
 	Exclude      []string `yaml:"exclude"`
 	LinkTemplate string   `yaml:"linkTemplate"`
+	DbPath       string   `yaml:"dbPath"`
 }

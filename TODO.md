@@ -1,7 +1,7 @@
 # 📌 Project TODOs
 [![Powered by Debrix](https://img.shields.io/badge/Powered%20by-Debrix-6E40C9?style=flat&logo=task)](https://debrix.dev)
 
-_Last update: 2025-04-25_
+_Last update: 2025-04-26_
 
 ## 📊 Overview
 
@@ -14,7 +14,7 @@ _Last update: 2025-04-25_
 
 ## 🗂 General
 
-- [ ] [utils.go:32](internal/todos/utils.go:32) validate value (must be date in format YYYY-MM-DD)
-- [ ] [utils.go:35](internal/todos/utils.go:35) validate value (must be date in format YYYY-MM-DD)
-- [ ] [GetConfig.go:39](internal/utils/GetConfig.go:39) Also exclude the same content as defined in project .gitignore
+- [ ] [processTodo.go:64](internal/todoItils/processTodo.go:64) validate value (must be date in format YYYY-MM-DD)
+- [ ] [processTodo.go:67](internal/todoItils/processTodo.go:67) validate value (must be date in format YYYY-MM-DD)
+- [ ] [GetConfig.go:40](internal/utils/GetConfig.go:40) Also exclude the same content as defined in project .gitignore
 

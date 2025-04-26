@@ -2,12 +2,13 @@ package mdGenerator
 
 import (
 	"fmt"
-	"github.com/ivadey/debrix-cli/internal/todos"
+	"github.com/ivadey/debrix-cli/internal/dbUtils"
+	"github.com/ivadey/debrix-cli/internal/todoItils"
 	"github.com/ivadey/debrix-cli/internal/utils"
 	"strings"
 )
 
-func generateTable(lang string, todosInfo []todos.TodoInfo, config *utils.Config) string {
+func generateTable(lang string, todosInfo []dbUtils.TodoItem, config *utils.Config) string {
 	localizedLabels := getLabels(lang)
 
 	res := fmt.Sprintf(
@@ -19,35 +20,49 @@ func generateTable(lang string, todosInfo []todos.TodoInfo, config *utils.Config
 	)
 	res += "|---|---|---|---|---|\n"
 
-	for _, todoInfo := range todosInfo {
-		todo := strings.ReplaceAll(todoInfo.Task, "\n", "<br>")
+	for _, todoItem := range todosInfo {
+		todo := strings.ReplaceAll(todoItem.Task, "\n", "<br>")
 		todo = strings.ReplaceAll(todo, "|", "\\|")
 
-		deadline := todoInfo.Due
+		deadline := todoItem.Due
 		if deadline == "" {
 			deadline = "-"
+		} else if todoItem.IsCompleted {
+			deadline = fmt.Sprintf("~~%s~~", deadline)
 		}
 
-		reminder := todoInfo.Reminder
+		reminder := todoItem.Reminder
 		if reminder == "" {
 			reminder = "-"
+		} else if todoItem.IsCompleted {
+			reminder = fmt.Sprintf("~~%s~~", reminder)
 		}
 
-		assignee := todoInfo.Assignee
+		assignee := todoItem.Assignee
 		if assignee == "" {
 			assignee = "-"
+		} else if todoItem.IsCompleted {
+			assignee = fmt.Sprintf("~~%s~~", assignee)
 		}
 
 		file := fmt.Sprintf(
 			"[%s:%d](%s)",
-			todoInfo.FileName,
-			todoInfo.Line,
-			utils.GenerateLink(todoInfo, config),
+			todoItem.FileName,
+			todoItem.Line,
+			todoItils.GenerateLink(todoItem, config),
 		)
+		if todoItem.IsCompleted {
+			file = fmt.Sprintf("~~%s~~", file)
+		}
+
+		task := strings.ReplaceAll(todoItem.Task, "\n", "<br>")
+		if todoItem.IsCompleted {
+			task = fmt.Sprintf("~~%s~~", task)
+		}
 
 		res += fmt.Sprintf(
 			"|%s|%s|%s|%s|%s|\n",
-			strings.ReplaceAll(todoInfo.Task, "\n", "<br>"),
+			task,
 			deadline,
 			reminder,
 			assignee,
