@@ -7,9 +7,12 @@ import (
 	"os"
 )
 
+var version string
+
 var rootCmd = &cobra.Command{
-	Use:   "debrix",
-	Short: "Debrix – CLI tool to manage TODOs in code",
+	Use:     "debrix",
+	Short:   "Debrix – CLI tool to manage TODOs in code",
+	Version: version,
 }
 
 func Execute() {
