@@ -62,10 +62,10 @@ func generateTable(lang string, todosInfo []dbUtils.TodoItem, config *utils.Conf
 
 		res += fmt.Sprintf(
 			"|%s|%s|%s|%s|%s|\n",
-			task,
-			deadline,
-			reminder,
-			assignee,
+			utils.EscapeForMarkdown(task),
+			utils.EscapeForMarkdown(deadline),
+			utils.EscapeForMarkdown(reminder),
+			utils.EscapeForMarkdown(assignee),
 			file,
 		)
 	}

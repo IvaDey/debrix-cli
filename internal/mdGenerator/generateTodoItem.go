@@ -22,20 +22,20 @@ func generateTodoItem(lang string, todoItem dbUtils.TodoItem, config *utils.Conf
 		todoItem.FileName,
 		todoItem.Line,
 		todoItils.GenerateLink(todoItem, config),
-		todoItem.Task,
+		utils.EscapeForMarkdown(todoItem.Task),
 	)
 	annotations := make([]string, 0)
 
 	if todoItem.Due != "" {
-		annotations = append(annotations, fmt.Sprintf("⏰ %s: %v", localizedLabels.deadline, todoItem.Due))
+		annotations = append(annotations, fmt.Sprintf("⏰ %s: %v", localizedLabels.deadline, utils.EscapeForMarkdown(todoItem.Due)))
 	}
 
 	if todoItem.Reminder != "" {
-		annotations = append(annotations, fmt.Sprintf("🔔 %s: %v", localizedLabels.reminder, todoItem.Reminder))
+		annotations = append(annotations, fmt.Sprintf("🔔 %s: %v", localizedLabels.reminder, utils.EscapeForMarkdown(todoItem.Reminder)))
 	}
 
 	if todoItem.Assignee != "" {
-		annotations = append(annotations, fmt.Sprintf("👤 %s: %v", localizedLabels.assignee, todoItem.Assignee))
+		annotations = append(annotations, fmt.Sprintf("👤 %s: %v", localizedLabels.assignee, utils.EscapeForMarkdown(todoItem.Assignee)))
 	}
 
 	if len(annotations) > 0 {

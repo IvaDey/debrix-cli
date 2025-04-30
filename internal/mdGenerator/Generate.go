@@ -65,8 +65,9 @@ func Generate(todoItems []dbUtils.TodoItem, config *utils.Config) string {
 	}
 	for scope, items := range scopedTodos {
 		res += fmt.Sprintf(
-			"## 🧩 %s: "+scope+"\n\n%s\n\n",
+			"## 🧩 %s: %s\n\n%s\n\n",
 			localizedLabels.scope,
+			utils.EscapeForMarkdown(scope),
 			generateTodosLayout(lang, items, layout, config),
 		)
 	}
