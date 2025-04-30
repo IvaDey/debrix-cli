@@ -16,16 +16,17 @@ func Collect(basePath string, path string, pattern *regexp.Regexp) []dbUtils.Tod
 	}
 
 	todos := make([]dbUtils.TodoItem, 0)
+	relativePath, _ := filepath.Rel(basePath, path)
 
 	db := dbUtils.OpenDb()
 	var storedItems []dbUtils.StoredTodo
-	db.Where("file_name = ? and is_completed = false", filepath.Base(path)).Find(&storedItems)
+	db.Where("relative_path = ? and is_completed = false", relativePath).Find(&storedItems)
 
 	for _, comment := range comments {
 		for index, line := range strings.Split(comment.Text, "\n") {
 			if pattern.MatchString(line) {
 				todoItem := processTodo(line, pattern)
-				todoItem.RelativePath, _ = filepath.Rel(basePath, path)
+				todoItem.RelativePath = relativePath
 				todoItem.FileName = filepath.Base(path)
 				todoItem.Line = comment.Line + uint32(index)
 
