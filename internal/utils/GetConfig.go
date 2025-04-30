@@ -5,6 +5,7 @@ import (
 	"os"
 	"path/filepath"
 	"slices"
+	"strings"
 )
 
 const configFileName = ".debrix.yml"
@@ -38,8 +39,6 @@ func ReadConfig(atPath string) *Config {
 		DbPath:       ".debrix.db",
 	}
 
-	// todo: Also exclude the same content as defined in project .gitignore
-
 	fromFile, err := os.ReadFile(filepath.Join(atPath, configFileName))
 	if err == nil {
 		err = yaml.Unmarshal(fromFile, config)
@@ -47,6 +46,16 @@ func ReadConfig(atPath string) *Config {
 
 	if !slices.Contains(config.Exclude, ".git") {
 		config.Exclude = append(config.Exclude, ".git")
+	}
+
+	if gitignore, readErr := os.ReadFile(filepath.Join(atPath, ".gitignore")); readErr == nil {
+		lines := strings.Split(string(gitignore), "\n")
+		for _, raw := range lines {
+			line := strings.TrimSpace(raw)
+			if line != "" && !strings.HasPrefix(line, "#") && !slices.Contains(config.Exclude, line) {
+				config.Exclude = append(config.Exclude, line)
+			}
+		}
 	}
 
 	return config
