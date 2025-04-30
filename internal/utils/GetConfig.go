@@ -4,6 +4,7 @@ import (
 	"gopkg.in/yaml.v3"
 	"os"
 	"path/filepath"
+	"slices"
 )
 
 const configFileName = ".debrix.yml"
@@ -42,6 +43,10 @@ func ReadConfig(atPath string) *Config {
 	fromFile, err := os.ReadFile(filepath.Join(atPath, configFileName))
 	if err == nil {
 		err = yaml.Unmarshal(fromFile, config)
+	}
+
+	if !slices.Contains(config.Exclude, ".git") {
+		config.Exclude = append(config.Exclude, ".git")
 	}
 
 	return config
